@@ -1,8 +1,12 @@
-﻿namespace Jeu
+﻿using IHM;
+
+namespace Jeu
 {
     class Plateau
     {
         public Partie partie;
+
+        public IReactions ireactions;
 
         public int largeur;
         public int hauteur;
@@ -12,10 +16,12 @@
         private int decouvertes;
         private int restantes;
 
-        public Plateau(int largeur, int hauteur)
+        public Plateau(int largeur, int hauteur, IReactions ireactions)
         {
             this.largeur = largeur;
             this.hauteur = hauteur;
+
+            this.ireactions = ireactions;
 
             cases = new Case[largeur, hauteur];
 
@@ -28,7 +34,7 @@
             {
                 for (int j = 0; j < this.hauteur; j++)
                 {
-                    cases[i, j] = new Case();
+                    cases[i, j] = new Case(i, j, this, ireactions);
 
                     int n = hauteur - 1;
                     if (i > 0 && j > 0)
