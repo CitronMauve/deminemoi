@@ -12,6 +12,11 @@
         private int decouvertes;
         private int restantes;
 
+        public Plateau()
+        {
+
+        }
+
         public Case Trouver(int x, int y)
         {
             return cases[x, y];
@@ -24,14 +29,7 @@
 
         public void ModifierMarquees(bool marquee)
         {
-            if (marquee)
-            {
-                restantes--;
-            } else
-            {
-                restantes++;
-            }
-
+            restantes = marquee ? restantes-- : restantes++;
             partie.vue.ActualiserComptage(restantes);
         }
 
