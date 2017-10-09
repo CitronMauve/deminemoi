@@ -6,6 +6,7 @@ namespace Jeu
     public class Partie : IActions
     {
         Random rnd = new Random(); // à supprimer après le test
+        Plateau plateau;
 
         public IReactions vue
         {
@@ -14,7 +15,7 @@ namespace Jeu
 
         public void CommencerPartie(int largeur, int hauteur, int mines)
         {
-
+            this.plateau = new Plateau(largeur, hauteur);
         }
 
         public void DecouvrirCase(int x, int y)
@@ -30,6 +31,8 @@ namespace Jeu
         public void MarquerCase(int x, int y)
         {
 
+            Case casse = this.plateau.Trouver(x, y);
+            casse.Marquer();
         }
 
         public void TerminerPartie()

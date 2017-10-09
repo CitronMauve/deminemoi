@@ -52,7 +52,9 @@
     </Compile>
     <Compile Include="IActions.cs" />
     <Compile Include="IReactions.cs" />
+    <Compile Include="Jeu\Case.cs" />
     <Compile Include="Jeu\Partie.cs" />
+    <Compile Include="Jeu\Plateau.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="IHM\Fenetre.resx">

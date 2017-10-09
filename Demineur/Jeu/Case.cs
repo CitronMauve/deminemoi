@@ -9,8 +9,7 @@ namespace Jeu
         public bool minee;
         public bool marquee;
         public bool decouverte;
-
-
+        
         public void Marquer()
         {
 
