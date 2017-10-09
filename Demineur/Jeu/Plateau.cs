@@ -1,6 +1,4 @@
-﻿using Jeu;
-
-namespace Demineur
+﻿namespace Jeu
 {
     class Plateau
     {
