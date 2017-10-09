@@ -22,7 +22,7 @@ namespace Jeu
         {
             // à supprimer après le test
             int i = rnd.Next(-1, 9);
-            if(i==-1)
+            if (i == -1)
                 vue.AfficherCaseMinee(x, y, true);
             else
                 vue.AfficherCaseNumerotee(x, y, i);
@@ -30,7 +30,6 @@ namespace Jeu
 
         public void MarquerCase(int x, int y)
         {
-
             Case casse = this.plateau.Trouver(x, y);
             casse.Marquer();
         }
