@@ -15,7 +15,7 @@ namespace Jeu
 
         public void CommencerPartie(int largeur, int hauteur, int mines)
         {
-            this.plateau = new Plateau(largeur, hauteur);
+            this.plateau = new Plateau(largeur, hauteur, vue);
         }
 
         public void DecouvrirCase(int x, int y)
