@@ -1,28 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Jeu
 {
     class Case
     {
-        private bool minee, marquee, decouverte;
+        List<Case> voisines = new List<Case>();
 
-        private void Marquer()
+        public bool minee;
+        public bool marquee;
+        public bool decouverte;
+
+
+        public void Marquer()
         {
 
         }
 
-        private void Decouvrir()
+        public void Decouvrir()
         {
 
         }
 
-        private void Afficher()
+        public void Afficher()
         {
 
+        }
+
+        public void Connecter(Case c)
+        {
+            voisines.Add(c);
         }
     }
 }
