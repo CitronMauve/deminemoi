@@ -33,7 +33,7 @@
                     int n = hauteur - 1;
                     if (i > 0 && j > 0)
                     {
-                        Connecter(cases[i, j], cases[i - 1, y - 1]);
+                        Connecter(cases[i, j], cases[i - 1, j - 1]);
                     } else if (i > 0)
                     {
                         Connecter(cases[i, j], cases[i - 1, j]);
