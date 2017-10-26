@@ -5,8 +5,6 @@ namespace Jeu
 {
     class Case
     {
-        List<Case> voisines = new List<Case>();
-
         public int x;
         public int y;
 
@@ -17,24 +15,57 @@ namespace Jeu
         public Plateau plateau;
         public IReactions ireactions;
 
+        public List<Case> connexion;
+
         public Case(int x, int y, Plateau plateau, IReactions ireactions)
         {
             this.x = x;
             this.y = y;
             this.plateau = plateau;
             this.ireactions = ireactions;
+            this.connexion = new List<Case>();
         }
         
         public void Marquer()
         {
-            this.marquee = !this.marquee;
-            this.plateau.ModifierMarquees(this.marquee);
-            this.ireactions.MarquerCase(this.x, this.y, this.marquee);
+            this.marquee = true;
         }
 
         public void Decouvrir()
         {
-
+            if (!decouverte)
+            {
+                decouverte = true;
+                plateau.IncrementerDecouvertes();
+                if (this.marquee)
+                {
+                    if (this.minee)
+                    {
+                        ireactions.AfficherCaseMinee(x, y, true);
+                    }
+                    else
+                    {
+                        ireactions.AfficherCaseMarquee(x, y);
+                        ireactions.PartiePerdue();
+                    }
+                }
+                else
+                {
+                    if (this.minee)
+                    {
+                        ireactions.AfficherCaseMinee(x, y, true);
+                        ireactions.PartiePerdue();
+                    }
+                    else
+                    {
+                        ireactions.AfficherCaseNumerotee(x, y, CountMines());
+                        if (CountMines() == 0)
+                        {
+                            DecouvrirCasesVoisine();
+                        }
+                    }
+                }
+            }
         }
 
         public void Afficher()
@@ -42,9 +73,32 @@ namespace Jeu
 
         }
 
+        private int CountMines()
+        {
+            int result = 0;
+            foreach (Case casesVoisine in connexion)
+            {
+                if (casesVoisine.minee)
+                {
+                    ++result;
+                }
+            }
+            this.decouverte = true;
+            return result;
+        }
+
+        private void DecouvrirCasesVoisine()
+        {
+            foreach (Case caseVoisine in connexion)
+            {
+                if (!caseVoisine.marquee)
+                    caseVoisine.Decouvrir();
+            }
+        }
+
         public void Connecter(Case c)
         {
-            voisines.Add(c);
+            connexion.Add(c);
         }
     }
 }

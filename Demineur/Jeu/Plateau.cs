@@ -1,4 +1,5 @@
 ﻿using IHM;
+using System;
 
 namespace Jeu
 {
@@ -10,13 +11,15 @@ namespace Jeu
 
         public int largeur;
         public int hauteur;
-        Case[,] cases;
+        public Case[,] cases;
 
-        private int mines;
-        private int decouvertes;
-        private int restantes;
+        public int mines;
+        public int decouvertes;
+        public int restantes;
 
-        public Plateau(int largeur, int hauteur, IReactions ireactions)
+        Random random = new Random();
+
+        public Plateau(Partie partie, int largeur, int hauteur, int mines, IReactions ireactions)
         {
             this.largeur = largeur;
             this.hauteur = hauteur;
@@ -25,11 +28,14 @@ namespace Jeu
 
             cases = new Case[largeur, hauteur];
 
-            fillCases();
-        }
+            this.partie = partie;
 
-        private void fillCases()
-        {
+            this.mines = mines;
+            this.decouvertes = 0;
+            this.restantes = mines;
+
+            int limit = 0;
+
             for (int i = 0; i < this.largeur; i++)
             {
                 for (int j = 0; j < this.hauteur; j++)
@@ -37,21 +43,29 @@ namespace Jeu
                     cases[i, j] = new Case(i, j, this, ireactions);
 
                     int n = hauteur - 1;
-                    if (i > 0 && j > 0)
-                    {
-                        Connecter(cases[i, j], cases[i - 1, j - 1]);
-                    } else if (i > 0)
-                    {
-                        Connecter(cases[i, j], cases[i - 1, j]);
-                    } else if (j > 0)
-                    {
-                        Connecter(cases[i, j], cases[i, j - 1]);
-                    } else
-                    {
-                        Connecter(cases[i, j], cases[i - 1, j + 1]);
-                    }
+                    if (i > 0 && j > 0) Connecter(cases[i, j], cases[i - 1, j - 1]);
+                    if (i > 0) Connecter(cases[i, j], cases[i - 1, j]);
+                    if (j > 0) Connecter(cases[i, j], cases[i, j - 1]);
+                    if (i > 0 && j < n) Connecter(cases[i, j], cases[i - 1, j + 1]);
                 }
             }
+
+            limit = this.mines;
+
+            for (int i = 0; i < limit; i++)
+            {
+                int x = random.Next(0, largeur);
+                int y = random.Next(0, hauteur);
+                if (!cases[x, y].minee)
+                {
+                    cases[x, y].minee = true;
+                }
+                else
+                {
+                    limit++;
+                }
+            }
+            partie.vue.ActualiserComptage(restantes);
         }
 
         private void Connecter(Case a, Case b)
@@ -72,7 +86,7 @@ namespace Jeu
 
         public void ModifierMarquees(bool marquee)
         {
-            restantes = marquee ? restantes-- : restantes++;
+            restantes = marquee ? restantes - 1 : restantes + 1;
             partie.vue.ActualiserComptage(restantes);
         }
 
